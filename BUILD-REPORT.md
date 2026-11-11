@@ -99,8 +99,21 @@ labelled by hand: the escalation trace refunds $150 with no approval event
 and FAILs on the amount-limit rule alone; the evidence-missing trace omits
 the amount and the `authorization_record` evidence and is UNRESOLVED.
 
-## Ship record
+## Ship record (verified 2026-11-11)
 
-Filled in after the upload steps complete (repo creation, topics read-back,
-first CI run, v0.1.0 release) — see the final delivery report for the
-verified values.
+- Repo: https://github.com/Iceman2050/sop-contract (public, created and
+  pushed 2026-11-11; initial commit 5cf6aae).
+- Topics applied via `gh repo edit` and read back (16): acceptance-testing,
+  agent-evaluation, ai, ai-agents, automation, cli, developer-tools,
+  evaluation, llm, policy-as-code, python, quality-assurance,
+  test-automation, testing, workflow, workflow-automation.
+- CI: GitHub Actions run **43045299045** — success on Python 3.10 / 3.11 /
+  3.12, verified from the actual run log ("28 passed" in every matrix job,
+  plus the fixture-run step reproducing the 2 PASS / 4 FAIL / 1 UNRESOLVED
+  refund report). Matrix excludes 3.9.
+- Release: https://github.com/Iceman2050/sop-contract/releases/tag/v0.1.0
+  (annotated tag v0.1.0 pushed, honest notes, no certification language).
+- Attribution check: full-tree grep for "Muse" / "2HCQH1" before push —
+  zero matches.
+- Registry: `~/workspace/github-godmode-v2/registry.yaml` appended with the
+  sop-contract entry (topics + CI run id); file re-parsed as valid YAML.
