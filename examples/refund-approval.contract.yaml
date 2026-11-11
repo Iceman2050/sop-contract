@@ -1,0 +1,49 @@
+# Refund-approval SOP contract (human-approved example).
+# Rules: verify-order is required; amount-limit caps refunds at 100
+# without human approval; invalid-order must be denied.
+workflow: refund-approval
+objective: Refund a customer order only when the order is valid and the customer is eligible, within the approved amount limit or with human approval, and record the outcome.
+preconditions:
+  - order_exists
+  - payment_captured
+permitted_tools:
+  - get_order
+  - verify_eligibility
+  - record_authorization
+  - issue_refund
+  - record_result
+  - request_approval
+  - deny_request
+required_steps:
+  - id: verify-order
+    tool: verify_eligibility
+  - id: record-authorization
+    tool: record_authorization
+  - id: record-result
+    tool: record_result
+forbidden_actions:
+  - id: no-gift-card-refund
+    tool: refund_to_gift_card
+  - id: no-order-deletion
+    tool: delete_order
+exception_paths:
+  - id: invalid-order
+    when_field: order_valid
+    when_equals: false
+    expected_tool: deny_request
+    must_not_use:
+      - issue_refund
+human_escalation:
+  - id: amount-limit
+    field: amount
+    maximum: 100
+    action: require_approval
+    approval_tool: request_approval
+postconditions:
+  - eligibility_verified
+  - authorization_recorded
+  - execution_result_recorded
+evidence:
+  - eligibility_check
+  - authorization_record
+  - execution_receipt

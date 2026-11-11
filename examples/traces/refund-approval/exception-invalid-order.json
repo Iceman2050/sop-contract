@@ -1,0 +1,1 @@
+{"case_id":"exception-invalid-order","context":{"amount":50,"order_valid":false},"events":[{"args":{"order_id":"ord-9999"},"result":{"found":false},"tool":"get_order"},{"args":{"order_id":"ord-9999","reason":"invalid order"},"result":{"denied":true},"tool":"deny_request"}],"evidence":{"order_record":"ord-9999 lookup"},"outcome":{}}

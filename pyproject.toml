@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sop-contract"
+version = "0.1.0"
+description = "Convert human-approved SOPs into executable agent acceptance tests: validate a procedure contract, generate cases, evaluate recorded/sandbox traces, emit PASS/FAIL/UNRESOLVED evidence reports."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Ingenious AI" }]
+keywords = ["ai-agents", "acceptance-testing", "sop", "evaluation", "policy-as-code"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+sop-contract = "sop_contract.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["sop_contract*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

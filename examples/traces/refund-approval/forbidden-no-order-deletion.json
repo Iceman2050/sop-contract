@@ -1,0 +1,1 @@
+{"case_id":"forbidden-no-order-deletion","context":{"amount":40,"order_valid":true},"events":[{"args":{"order_id":"ord-1003"},"result":{"found":true},"tool":"get_order"},{"args":{"order_id":"ord-1003"},"result":{"deleted":true},"tool":"delete_order"}],"evidence":{},"outcome":{}}

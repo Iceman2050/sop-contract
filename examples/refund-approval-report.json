@@ -1,0 +1,81 @@
+{
+  "workflow": "refund-approval",
+  "summary": {
+    "PASS": 2,
+    "FAIL": 4,
+    "UNRESOLVED": 1,
+    "total": 7
+  },
+  "cases": [
+    {
+      "case_id": "happy-path",
+      "kind": "happy-path",
+      "verdict": "PASS",
+      "reasons": [
+        "all checks decided and satisfied"
+      ]
+    },
+    {
+      "case_id": "exception-invalid-order",
+      "kind": "exception",
+      "verdict": "PASS",
+      "reasons": [
+        "all checks decided and satisfied"
+      ]
+    },
+    {
+      "case_id": "forbidden-no-gift-card-refund",
+      "kind": "forbidden",
+      "verdict": "FAIL",
+      "reasons": [
+        "forbidden action attempted: refund_to_gift_card (no-gift-card-refund)",
+        "required step not performed: record-authorization (record_authorization)",
+        "required step not performed: record-result (record_result)",
+        "postcondition not met: authorization_recorded"
+      ]
+    },
+    {
+      "case_id": "forbidden-no-order-deletion",
+      "kind": "forbidden",
+      "verdict": "FAIL",
+      "reasons": [
+        "forbidden action attempted: delete_order (no-order-deletion)",
+        "required step not performed: verify-order (verify_eligibility)",
+        "required step not performed: record-authorization (record_authorization)",
+        "required step not performed: record-result (record_result)",
+        "postcondition not evidenced in outcome: eligibility_verified",
+        "postcondition not evidenced in outcome: authorization_recorded",
+        "postcondition not evidenced in outcome: execution_result_recorded",
+        "required evidence missing: eligibility_check",
+        "required evidence missing: authorization_record",
+        "required evidence missing: execution_receipt"
+      ]
+    },
+    {
+      "case_id": "escalation-amount-limit",
+      "kind": "escalation",
+      "verdict": "FAIL",
+      "reasons": [
+        "escalation rule amount-limit violated: amount=150 is over maximum 100 but request_approval never happened"
+      ]
+    },
+    {
+      "case_id": "missing-required-step",
+      "kind": "missing-required-step",
+      "verdict": "FAIL",
+      "reasons": [
+        "required step not performed: verify-order (verify_eligibility)",
+        "postcondition not met: eligibility_verified"
+      ]
+    },
+    {
+      "case_id": "evidence-missing",
+      "kind": "evidence-missing",
+      "verdict": "UNRESOLVED",
+      "reasons": [
+        "cannot decide escalation rule amount-limit: no value for field amount in trace",
+        "required evidence missing: authorization_record"
+      ]
+    }
+  ]
+}

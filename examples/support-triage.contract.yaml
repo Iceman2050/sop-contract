@@ -1,0 +1,41 @@
+# Support-ticket triage SOP contract (second example: the format is general).
+workflow: support-ticket-triage
+objective: Classify every incoming support ticket, assign it to a queue, reply only with approved templates, and escalate high-risk tickets to a human.
+preconditions:
+  - ticket_exists
+permitted_tools:
+  - read_ticket
+  - classify_ticket
+  - assign_ticket
+  - reply_to_customer
+  - escalate_to_human
+  - close_ticket
+required_steps:
+  - id: classify-ticket
+    tool: classify_ticket
+  - id: assign-ticket
+    tool: assign_ticket
+forbidden_actions:
+  - id: no-ticket-deletion
+    tool: delete_ticket
+  - id: no-marketing-blast
+    tool: send_marketing_email
+exception_paths:
+  - id: spam-ticket
+    when_field: is_spam
+    when_equals: true
+    expected_tool: close_ticket
+    must_not_use:
+      - reply_to_customer
+human_escalation:
+  - id: high-risk-ticket
+    field: risk_score
+    maximum: 80
+    action: require_approval
+    approval_tool: escalate_to_human
+postconditions:
+  - ticket_classified
+  - ticket_assigned
+evidence:
+  - classification_record
+  - assignment_record
